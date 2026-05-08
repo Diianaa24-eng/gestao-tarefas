@@ -39,7 +39,7 @@ def executar_query(query, params=None, fetch=False, fetchone=False):
         con.commit()
         return cursor.lastrowid
 
-# --- UTILIZADORES ---
+
 
 def criar_utilizador(nome, email, password_hash):
     query = "INSERT INTO utilizador (nome, email, palavra_passe) VALUES (%s, %s, %s)"
@@ -78,7 +78,7 @@ def remover_utilizador(id_utilizador):
             cursor.execute(query, params)
         con.commit()
 
-# --- CATEGORIAS ---
+
 
 def criar_categoria(nome, id_utilizador):
     query = "INSERT INTO categoria (nome, id_utilizador) VALUES (%s, %s)"
@@ -103,7 +103,7 @@ def remover_categoria(id_categoria):
         cursor.execute("DELETE FROM categoria WHERE id_categoria = %s", (id_categoria,))
         con.commit()
 
-# --- TAREFAS ---
+
 
 def criar_tarefa(titulo, descricao, data_limite, estado, id_categoria, id_utilizador):
     query = """
@@ -165,7 +165,7 @@ def obter_estatisticas_tarefas(id_utilizador):
     """
     return executar_query(query, (id_utilizador,), fetchone=True)
 
-# --- EVENTOS ---
+
 
 def criar_evento(titulo, descricao, data_evento, hora_evento, local, id_utilizador):
     query = """
@@ -233,44 +233,44 @@ def obter_estatisticas_pagamentos(id_utilizador):
     """
     return executar_query(query, (id_utilizador,), fetchone=True)
 
-# --- CALENDÁRIO ---
+
 
 def obter_itens_calendario(id_utilizador):
     """Retorna todos os itens ordenados por data."""
     itens = []
     
-    # Tarefas
+    
     tarefas = executar_query(
         "SELECT data_limite as data, titulo, estado as info, 'Tarefa' as tipo FROM tarefa WHERE id_utilizador = %s",
         (id_utilizador,), fetch=True
     )
     itens.extend(tarefas)
     
-    # Eventos
+
     eventos = executar_query(
         "SELECT data_evento as data, titulo, hora_evento as info, 'Evento' as tipo FROM evento WHERE id_utilizador = %s",
         (id_utilizador,), fetch=True
     )
     itens.extend(eventos)
     
-    # Pagamentos
+    
     pagamentos = executar_query(
         "SELECT data_pagamento as data, descricao as titulo, CONCAT(valor, '€ - ', estado) as info, 'Pagamento' as tipo FROM pagamento WHERE id_utilizador = %s",
         (id_utilizador,), fetch=True
     )
     itens.extend(pagamentos)
     
-    # Ordenar por data
+    
     itens.sort(key=lambda x: x['data'] if x['data'] else '9999-99-99')
     return itens
 
-# --- ALERTAS ---
+
 
 def obter_alertas(id_utilizador, dias=3):
     """Retorna tarefas e pagamentos próximos do prazo."""
     alertas = []
     
-    # Tarefas próximas do prazo
+    
     tarefas = executar_query("""
         SELECT titulo, data_limite, 'Tarefa' as tipo
         FROM tarefa 
@@ -281,7 +281,7 @@ def obter_alertas(id_utilizador, dias=3):
     """, (id_utilizador, dias), fetch=True)
     alertas.extend(tarefas)
     
-    # Pagamentos pendentes próximos
+    
     pagamentos = executar_query("""
         SELECT descricao as titulo, data_pagamento as data_limite, 'Pagamento' as tipo
         FROM pagamento 

@@ -12,7 +12,7 @@ def exportar_csv(dados: list, ficheiro: str, colunas: list):
         writer = csv.DictWriter(f, fieldnames=colunas)
         writer.writeheader()
         for item in dados:
-            # Filtrar apenas as colunas desejadas
+            
             row = {col: item.get(col, '') for col in colunas}
             writer.writerow(row)
     return ficheiro
@@ -23,32 +23,32 @@ def exportar_pdf(dados: list, ficheiro: str, titulo: str, colunas: list):
     elementos = []
     styles = getSampleStyleSheet()
     
-    # Título
+   
     titulo_style = ParagraphStyle(
         'Titulo',
         parent=styles['Heading1'],
         fontSize=18,
         spaceAfter=20,
-        alignment=1  # Centrado
+        alignment=1  
     )
     elementos.append(Paragraph(titulo, titulo_style))
     
-    # Data do relatório
+    
     data_relatorio = datetime.now().strftime("%d/%m/%Y %H:%M")
     elementos.append(Paragraph(f"Gerado em: {data_relatorio}", styles['Normal']))
     elementos.append(Spacer(1, 20))
     
-    # Tabela de dados
+    
     if dados:
-        # Cabeçalho
+        
         table_data = [colunas]
         
-        # Linhas de dados
+        
         for item in dados:
             row = [str(item.get(col, '')) for col in colunas]
             table_data.append(row)
         
-        # Criar tabela
+        
         tabela = Table(table_data, repeatRows=1)
         tabela.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#3b82f6')),

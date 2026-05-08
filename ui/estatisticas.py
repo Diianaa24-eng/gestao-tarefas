@@ -16,7 +16,7 @@ class JanelaEstatisticas(ctk.CTkToplevel):
         self._criar_interface()
     
     def _criar_interface(self):
-        # Notebook para diferentes gráficos
+        
         self.tabview = ctk.CTkTabview(self)
         self.tabview.pack(fill="both", expand=True, padx=20, pady=20)
         
@@ -42,11 +42,11 @@ class JanelaEstatisticas(ctk.CTkToplevel):
             ).pack(expand=True)
             return
         
-        # Criar figura
+        
         fig = Figure(figsize=(8, 5), dpi=100)
         fig.patch.set_facecolor('#2b2b2b')
         
-        # Gráfico de pizza
+        
         ax1 = fig.add_subplot(121)
         ax1.set_facecolor('#2b2b2b')
         
@@ -59,7 +59,7 @@ class JanelaEstatisticas(ctk.CTkToplevel):
         colors = ['#22c55e', '#f59e0b', '#3b82f6']
         explode = (0.05, 0, 0)
         
-        # Filtrar zeros
+        
         filtered = [(l, s, c) for l, s, c in zip(labels, sizes, colors) if s > 0]
         if filtered:
             labels, sizes, colors = zip(*filtered)
@@ -68,7 +68,7 @@ class JanelaEstatisticas(ctk.CTkToplevel):
                     textprops={'color': 'white'})
             ax1.set_title('Estado das Tarefas', color='white', fontsize=14)
         
-        # Gráfico de barras
+        
         ax2 = fig.add_subplot(122)
         ax2.set_facecolor('#2b2b2b')
         
@@ -84,14 +84,14 @@ class JanelaEstatisticas(ctk.CTkToplevel):
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
         
-        # Adicionar valores nas barras
+        
         for bar, val in zip(bars, valores):
             ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
                     str(val), ha='center', color='white', fontsize=12)
         
         fig.tight_layout()
         
-        # Incorporar no tkinter
+        
         canvas = FigureCanvasTkAgg(fig, master=tab)
         canvas.draw()
         canvas.get_tk_widget().pack(fill="both", expand=True)
@@ -156,7 +156,7 @@ class JanelaEstatisticas(ctk.CTkToplevel):
             ).pack(expand=True)
             return
         
-        # Agrupar por mês
+        
         from collections import defaultdict
         from datetime import datetime
         
@@ -173,7 +173,7 @@ class JanelaEstatisticas(ctk.CTkToplevel):
             ctk.CTkLabel(tab, text="Sem dados", font=("Arial", 16)).pack(expand=True)
             return
         
-        # Ordenar por mês
+        
         meses = sorted(por_mes.keys())
         valores = [por_mes[m] for m in meses]
         

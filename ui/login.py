@@ -11,7 +11,7 @@ class JanelaLogin(ctk.CTk):
         self.geometry("450x550")
         self.resizable(False, False)
         
-        # Utilizador autenticado (será preenchido após login)
+       
         self.utilizador = None
         
         self._criar_interface()
@@ -26,11 +26,11 @@ class JanelaLogin(ctk.CTk):
         self.geometry(f'{width}x{height}+{x}+{y}')
     
     def _criar_interface(self):
-        # Frame principal
+        
         self.frame_principal = ctk.CTkFrame(self, fg_color="transparent")
         self.frame_principal.pack(fill="both", expand=True, padx=40, pady=30)
         
-        # Logo/Título
+        
         ctk.CTkLabel(
             self.frame_principal,
             text="🗂️",
@@ -50,7 +50,7 @@ class JanelaLogin(ctk.CTk):
             text_color="gray"
         ).pack(pady=(0, 30))
         
-        # Tabview para Login/Registo
+        
         self.tabview = ctk.CTkTabview(self.frame_principal, width=350, height=300)
         self.tabview.pack(fill="both", expand=True)
         
@@ -106,7 +106,7 @@ class JanelaLogin(ctk.CTk):
         email = self.entry_email_login.get().strip()
         password = self.entry_password_login.get()
         
-        # Validações
+        
         valido, msg = validar_campos_obrigatorios(Email=email, Password=password)
         if not valido:
             messagebox.showwarning("Atenção", msg)
@@ -117,7 +117,7 @@ class JanelaLogin(ctk.CTk):
             messagebox.showwarning("Atenção", msg)
             return
         
-        # Autenticar
+       
         sucesso, resultado = autenticar(email, password)
         if sucesso:
             self.utilizador = resultado
@@ -130,7 +130,7 @@ class JanelaLogin(ctk.CTk):
         email = self.entry_email_registo.get().strip()
         password = self.entry_password_registo.get()
         
-        # Validações
+        
         valido, msg = validar_campos_obrigatorios(Nome=nome, Email=email, Password=password)
         if not valido:
             messagebox.showwarning("Atenção", msg)
@@ -146,7 +146,7 @@ class JanelaLogin(ctk.CTk):
             messagebox.showwarning("Atenção", msg)
             return
         
-        # Registar
+       
         sucesso, msg = registar_utilizador(nome, email, password)
         if sucesso:
             messagebox.showinfo("Sucesso", msg)

@@ -11,12 +11,12 @@ def verificar_password(password: str, hashed: str) -> bool:
 
 def registar_utilizador(nome: str, email: str, password: str) -> tuple[bool, str]:
     """Regista um novo utilizador."""
-    # Verificar se email já existe
+    
     existente = obter_utilizador_por_email(email)
     if existente:
         return False, "Este email já está registado."
     
-    # Criar utilizador com password hashed
+    
     try:
         password_hash = hash_password(password)
         criar_utilizador(nome, email, password_hash)

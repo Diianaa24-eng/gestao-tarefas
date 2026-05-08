@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from configparser import ConfigParser
 
-# Configurar tema
+
 def carregar_tema():
     try:
         config = ConfigParser()
@@ -39,7 +39,7 @@ class App:
     
     def _abrir_menu(self):
         """Abre o menu principal."""
-        # Criar janela raiz invisível
+        
         root = ctk.CTk()
         root.withdraw()
         

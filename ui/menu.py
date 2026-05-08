@@ -17,7 +17,7 @@ class JanelaMenu(ctk.CTkToplevel):
         self._verificar_alertas()
         self._centrar_janela()
         
-        # Garantir que ao fechar esta janela, a app termina
+        
         self.protocol("WM_DELETE_WINDOW", self._sair)
     
     def _centrar_janela(self):
@@ -29,11 +29,11 @@ class JanelaMenu(ctk.CTkToplevel):
         self.geometry(f'{width}x{height}+{x}+{y}')
     
     def _criar_interface(self):
-        # Frame principal
+        
         frame = ctk.CTkFrame(self, fg_color="transparent")
         frame.pack(fill="both", expand=True, padx=30, pady=20)
         
-        # Saudação
+    
         ctk.CTkLabel(
             frame,
             text=f"Olá, {self.utilizador['nome']}! 👋",
@@ -47,10 +47,10 @@ class JanelaMenu(ctk.CTkToplevel):
             text_color="gray"
         ).pack(pady=(0, 25))
         
-        # Frame para estatísticas rápidas
+        
         self._criar_estatisticas_rapidas(frame)
         
-        # Botões do menu
+        
         botoes = [
             ("📝 Tarefas", "tarefas", "#10b981"),
             ("📅 Eventos", "eventos", "#f59e0b"),
@@ -72,10 +72,10 @@ class JanelaMenu(ctk.CTkToplevel):
                 command=lambda m=modulo: self._abrir_modulo(m)
             ).pack(pady=8)
         
-        # Separador
+        
         ctk.CTkFrame(frame, height=2, fg_color="gray").pack(fill="x", pady=20)
         
-        # Botões secundários
+        
         frame_secundario = ctk.CTkFrame(frame, fg_color="transparent")
         frame_secundario.pack(fill="x")
         
@@ -108,7 +108,7 @@ class JanelaMenu(ctk.CTkToplevel):
         frame_stats = ctk.CTkFrame(parent, fg_color="#1e293b", corner_radius=10)
         frame_stats.pack(fill="x", pady=(0, 20))
         
-        # Grid de estatísticas
+        
         dados = [
             ("📋", str(stats['total'] or 0), "Total"),
             ("✅", str(stats['concluidas'] or 0), "Concluídas"),

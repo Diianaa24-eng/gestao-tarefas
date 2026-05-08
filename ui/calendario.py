@@ -17,12 +17,12 @@ class JanelaCalendario(ctk.CTkToplevel):
         self._carregar_itens()
     
     def _criar_interface(self):
-        # Layout em duas colunas
+       
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
         
-        # Coluna esquerda - Calendário
+        
         frame_cal = ctk.CTkFrame(self)
         frame_cal.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
         
@@ -69,7 +69,7 @@ class JanelaCalendario(ctk.CTkToplevel):
         self.frame_itens = ctk.CTkScrollableFrame(frame_detalhes, height=450)
         self.frame_itens.pack(fill="both", expand=True, padx=15, pady=10)
         
-        # Legenda
+        
         frame_legenda = ctk.CTkFrame(frame_detalhes, fg_color="transparent")
         frame_legenda.pack(fill="x", padx=15, pady=10)
         
@@ -86,20 +86,20 @@ class JanelaCalendario(ctk.CTkToplevel):
         """Carrega todos os itens do calendário."""
         self.itens = obter_itens_calendario(self.utilizador['id_utilizador'])
         
-        # Marcar datas com eventos no calendário
+        
         for item in self.itens:
             if item['data']:
                 data = item['data']
                 if isinstance(data, str):
                     data = datetime.strptime(data, "%Y-%m-%d").date()
                 
-                # Adicionar tag visual (o tkcalendar suporta isto limitadamente)
+               
                 try:
                     self.calendario.calevent_create(data, item['titulo'], item['tipo'].lower())
                 except:
                     pass
         
-        # Mostrar itens de hoje por defeito
+       
         self._mostrar_itens_data(datetime.now().strftime("%Y-%m-%d"))
     
     def _data_selecionada(self, event):
@@ -109,7 +109,7 @@ class JanelaCalendario(ctk.CTkToplevel):
     
     def _mostrar_itens_data(self, data_str):
         """Mostra os itens de uma data específica."""
-        # Atualizar título
+       
         try:
             data_obj = datetime.strptime(data_str, "%Y-%m-%d")
             data_formatada = data_obj.strftime("%d de %B de %Y")
@@ -117,11 +117,11 @@ class JanelaCalendario(ctk.CTkToplevel):
         except:
             self.label_data.configure(text=f"📅 {data_str}")
         
-        # Limpar itens anteriores
+        
         for widget in self.frame_itens.winfo_children():
             widget.destroy()
         
-        # Filtrar itens da data
+        
         itens_dia = []
         for item in self.itens:
             if item['data']:
@@ -140,7 +140,7 @@ class JanelaCalendario(ctk.CTkToplevel):
             ).pack(pady=30)
             return
         
-        # Mostrar itens
+       
         for item in itens_dia:
             self._criar_card_item(item)
     
@@ -163,14 +163,14 @@ class JanelaCalendario(ctk.CTkToplevel):
         card = ctk.CTkFrame(self.frame_itens, fg_color="#1e293b", corner_radius=10)
         card.pack(fill="x", pady=5)
         
-        # Indicador de cor
+       
         ctk.CTkFrame(card, width=5, fg_color=cor, corner_radius=0).pack(side="left", fill="y")
         
-        # Conteúdo
+        
         conteudo = ctk.CTkFrame(card, fg_color="transparent")
         conteudo.pack(side="left", fill="both", expand=True, padx=15, pady=10)
         
-        # Tipo e título
+        
         frame_top = ctk.CTkFrame(conteudo, fg_color="transparent")
         frame_top.pack(fill="x")
         
@@ -188,7 +188,7 @@ class JanelaCalendario(ctk.CTkToplevel):
             anchor="w"
         ).pack(fill="x", pady=(5, 0))
         
-        # Info adicional
+        
         if item.get('info'):
             ctk.CTkLabel(
                 conteudo,
